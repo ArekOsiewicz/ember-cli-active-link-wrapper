@@ -32,13 +32,13 @@ export default Ember.Mixin.create({
     if (this.get('childLinkViews').isAny('transitioningIn')) {
       return transitioningInClass;
     }
-  }, 32),
+  }, 16),
 
-  _transitioningOut: Ember.computed('childLinkViews.@each.transitioningOut', function() {
+  _transitioningOut: Ember.computed.debounce('childLinkViews.@each.transitioningOut', function() {
     if (this.get('childLinkViews').isAny('transitioningOut')) {
       return transitioningOutClass;
     }
-  }),
+  }, 16),
 
   hasActiveLinks: Ember.computed('childLinkViews.@each.active', function() {
     return this.get('childLinkViews').isAny('active');
@@ -49,9 +49,9 @@ export default Ember.Mixin.create({
     return (activeLink ? activeLink.get('active') : 'active');
   }),
 
-  _active: Ember.computed('hasActiveLinks', 'activeClass', function() {
+  _active: Ember.compute.debounce('hasActiveLinks', 'activeClass', function() {
     return (this.get('hasActiveLinks') ? this.get('activeClass') : false);
-  }),
+  }, 16),
 
   allLinksDisabled: Ember.computed('childLinkViews.@each.disabled', function() {
     return !Ember.isEmpty(this.get('childLinkViews')) && this.get('childLinkViews').isEvery('disabled');
@@ -62,8 +62,8 @@ export default Ember.Mixin.create({
     return (disabledLink ? disabledLink.get('disabled') : 'disabled');
   }),
 
-  _disabled: Ember.computed('allLinksDisabled', 'disabledClass', function() {
+  _disabled: Ember.computed.debounce('allLinksDisabled', 'disabledClass', function() {
     return (this.get('allLinksDisabled') ? this.get('disabledClass') : false);
-  })
+  }, 16)
 
 });
