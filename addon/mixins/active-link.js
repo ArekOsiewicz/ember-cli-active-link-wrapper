@@ -28,11 +28,11 @@ export default Ember.Mixin.create({
     });
   }),
 
-  _transitioningIn: Ember.computed('childLinkViews.@each.transitioningIn', function() {
+  _transitioningIn: Ember.computed.debounce('childLinkViews.@each.transitioningIn', function() {
     if (this.get('childLinkViews').isAny('transitioningIn')) {
       return transitioningInClass;
     }
-  }),
+  }, 32),
 
   _transitioningOut: Ember.computed('childLinkViews.@each.transitioningOut', function() {
     if (this.get('childLinkViews').isAny('transitioningOut')) {
