@@ -49,7 +49,7 @@ export default Ember.Mixin.create({
     return (activeLink ? activeLink.get('active') : 'active');
   }),
 
-  _active: Ember.compute.debounce('hasActiveLinks', 'activeClass', function() {
+  _active: Ember.computed.debounce('hasActiveLinks', 'activeClass', function() {
     return (this.get('hasActiveLinks') ? this.get('activeClass') : false);
   }, 16),
 
