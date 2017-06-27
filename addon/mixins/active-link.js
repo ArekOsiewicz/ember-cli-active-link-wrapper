@@ -31,6 +31,7 @@ export default Ember.Mixin.create({
     Ember.run.debounce(this, this._transitioningInFunc, 16);
   }),
   _transitioningInFunc: function() {
+    if (this.get("isDestroyed")) return;
     if (this.get('childLinkViews').isAny('transitioningIn')) {
       this.set("_transitioningIn", transitioningInClass);
     }
@@ -39,6 +40,7 @@ export default Ember.Mixin.create({
     Ember.run.debounce(this, this._transitioningOutFunc, 16);
   }),
   _transitioningOutFunc: function() {
+    if (this.get("isDestroyed")) return;
     if (this.get('childLinkViews').isAny('transitioningOut')) {
       this.set("_transitioningOut", transitioningOutClass);
     }
@@ -57,6 +59,7 @@ export default Ember.Mixin.create({
     Ember.run.debounce(this, this._activeFunc, 16);
   }),
   _activeFunc: function() {
+    if (this.get("isDestroyed")) return;
     this.set("_active", (this.get('hasActiveLinks') ? this.get('activeClass') : false));
   },
 
@@ -72,6 +75,7 @@ export default Ember.Mixin.create({
     Ember.run.debounce(this, this._disabledFunc, 16);
   }),
   _disabledFunc: function() {
+    if (this.get("isDestroyed")) return;
     this.set("_disabled", (this.get('allLinksDisabled') ? this.get('disabledClass') : false));
   },
 
